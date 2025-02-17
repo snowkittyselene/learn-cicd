@@ -15,6 +15,7 @@ func TestGetAPIKey(t *testing.T) {
 		"no header": {input: map[string][]string{}, wantStr: "", wantErr: ErrNoAuthHeaderIncluded.Error()},
 		"no ApiKey": {input: map[string][]string{"Authorization": {"12345 12345"}}, wantStr: "", wantErr: "malformed authorization header"},
 		"no value":  {input: map[string][]string{"Authorization": {"ApiKey"}}, wantStr: "", wantErr: "malformed authorization header"},
+		"multiple":  {input: map[string][]string{"Authorization": {"ApiKey 12345", "ApiKey 67890"}}, wantStr: "12345", wantErr: ""},
 	}
 
 	for name, tc := range tests {
